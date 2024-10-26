@@ -66,7 +66,10 @@ const fetchChats = asyncHandler(async (req, res) => {
         });
         res.status(200).send(results);
       });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).send({ message: "Failed to fetch chats", error: error.message });
+    console.log(error.message)
+  }
 });
 
 
