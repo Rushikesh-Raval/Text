@@ -31,7 +31,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain,fetchMessages }) => {
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
   const [search, setSearch] = useState("");
-  const ENDPOINT = "https://text-me-lpcd.onrender.com";
+  const front_url = "https://text-me-lpcd.onrender.com";
 
 
   const toast = useToast();
