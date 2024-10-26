@@ -11,6 +11,7 @@ const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState(null);
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const toast = useToast();
+  const front_url = "https://text-me-lpcd.onrender.com";
 
   const fetchChats = async () => {
     if (!user || !user.token) {
@@ -31,10 +32,15 @@ const MyChats = ({ fetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get("/api/chats", config);
+      console.log("object");
+      const { data } = await axios.get(`${front_url}/api/chats`, config);
+      console.log("Data---", data);
       setChats(data);
     } catch (error) {
-      console.error("Error fetching chats: ", error.response?.data || error.message);
+      console.error(
+        "Error fetching chats: ",
+        error.response?.data || error.message
+      );
       toast({
         title: "Error Occurred!!",
         description: error.response?.data || error.message,
