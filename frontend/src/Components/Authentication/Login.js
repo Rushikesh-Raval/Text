@@ -19,6 +19,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
+  const front_url = "http://localhost:5001"
 
   const handleClick = () => {
     setShow(!show);
@@ -49,7 +50,7 @@ const Login = () => {
       };
       console.log(email, password);
       const { data } = await axios.post(
-        "http://192.168.40.48:5001/api/user/login",
+        `${front_url}/api/user/login`,
         { email, password },
         config
       );

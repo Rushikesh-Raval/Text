@@ -22,6 +22,8 @@ const Signup = () => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
+  const front_url = "http://localhost:5001"
+
 
   const handleClick = () => {
     setShow(!show);
@@ -243,7 +245,7 @@ const Signup = () => {
         },
       };
       const { data } = await axios.post(
-        "http://172.20.10.3:5001/api/user",
+        `${front_url}/api/user`,
         { name, email, password, pic },
         config
       );
