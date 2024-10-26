@@ -7,14 +7,23 @@ import ChatLoading from "./ChatLoading";
 import { getSender } from "../config/chatLogics";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 
-
-const MyChats = ({fetchAgain}) => {
-  const [loggedUser, setLoggedUser] = useState();
+const MyChats = ({ fetchAgain }) => {
+  const [loggedUser, setLoggedUser] = useState(null);
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const toast = useToast();
 
   const fetchChats = async () => {
-    // console.log("Userrr----", user._id);
+    if (!user || !user.token) {
+      toast({
+        title: "User not found",
+        description: "Please log in again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+      return;
+    }
 
     try {
       const config = {
@@ -24,29 +33,35 @@ const MyChats = ({fetchAgain}) => {
       };
       const { data } = await axios.get("/api/chats", config);
       setChats(data);
-      // console.log("fetched chat----", data);
     } catch (error) {
-      console.error(
-        "Error fetching chats: ",
-        error.response?.data || error.message
-      );
+      console.error("Error fetching chats: ", error.response?.data || error.message);
       toast({
-        title: "Error Occured!!",
+        title: "Error Occurred!!",
         description: error.response?.data || error.message,
         status: "error",
         duration: 5000,
-        isClosable: true,  
+        isClosable: true,
         position: "bottom-left",
       });
     }
   };
 
   useEffect(() => {
-    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo) {
+      setLoggedUser(userInfo);
+    } else {
+      toast({
+        title: "User not found",
+        description: "Please log in again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
     fetchChats();
-  }, [fetchAgain]);
-
-  
+  }, [fetchAgain, user]);
 
   return (
     <Box
@@ -71,13 +86,13 @@ const MyChats = ({fetchAgain}) => {
       >
         My Chats
         <GroupChatModal>
-        <Button
-          display="flex"
-          fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-          rightIcon={<AddIcon />}
-        >
-          New Group
-        </Button>
+          <Button
+            display="flex"
+            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+            rightIcon={<AddIcon />}
+          >
+            New Group
+          </Button>
         </GroupChatModal>
       </Box>
       <Box
@@ -90,13 +105,13 @@ const MyChats = ({fetchAgain}) => {
         borderRadius="lg"
         overflowY="hidden"
       >
-        {chats ? (
+        {chats && chats.length > 0 ? (
           <Stack overflowY="scroll">
             {chats.map((chat) => (
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2Ac" : "#E8E8E8"} //when clicked it highlightes with blue background color
+                bg={selectedChat === chat ? "#38B2Ac" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
                 px={3}
                 py={2}
@@ -104,7 +119,7 @@ const MyChats = ({fetchAgain}) => {
                 key={chat._id}
               >
                 <Text>
-                  {!chat.isGroupChat
+                  {!chat.isGroupChat && loggedUser // Add this check
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>

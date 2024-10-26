@@ -1,0 +1,58 @@
+Mongo db password:--
+EUf63BSCQRebrliG //password
+
+Mongodb Connection string:--
+mongodb+srv://rushikesh19:EUf63BSCQRebrliG@cluster0.opsmy.mongodb.net/chat-app
+
+----------------------------------
+
+Must read:-
+npm i express-async-handler
+mongodb querries
+jsonwebtoken
+
+------------------------------
+
+cloudinary base url api---
+https://api.cloudinary.com/v1_1/dnb3bpgxr/image/upload
+
+rushikeshraval25@gmail.com
+
+------------------------------------
+Spinner in siderDrawer is not working check it once before leaving.
+------------------------------
+
+Might be wrong--
+index.js
+
+--------------------------------
+
+Errors to solve:---
+
+1. _id error while logging in.
+2. User Search Issue.
+
+------------------------
+// export const getSender =(loggedUser,users)=>{
+//     return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+// }
+
+export const getSender = (loggedUser, users) => {
+  if (!users || users.length < 2) {
+    return "Unknown Sender"; // Handle case when users array is missing or incomplete
+  }
+
+  return users[0]._id === loggedUser._id ? users[1].name : users[0].name;
+};
+------------------------------------------
+
+in UpdateGroupChat.js component the proble is in setFetchAgain(!fetchAgain) ********
+
+----------------------------------------------
+
+14---05:38
+
+
+
+15----20:58 
+pending work:- live messaging, typing indicator, notification, project deployment.

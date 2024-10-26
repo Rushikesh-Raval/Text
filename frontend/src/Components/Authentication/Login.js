@@ -19,7 +19,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
-  const front_url = "http://localhost:5001"
+  const front_url = "https://text-me-lpcd.onrender.com"
 
   const handleClick = () => {
     setShow(!show);
