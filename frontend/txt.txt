@@ -1,0 +1,2 @@
+Lottie Files:- For typing animations.
+react-notification badge for notification on bell icon.
