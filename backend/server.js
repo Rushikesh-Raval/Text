@@ -14,7 +14,11 @@ const app = express();
 connectDB(); // Connect to the database
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ["https://text-mee.onrender.com", "http://localhost:3000"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(express.json()); // Parse JSON from requests
 
 // Routes
@@ -23,8 +27,6 @@ app.use("/api/chats", chatRoutes);
 app.use("/api/message", messageRoutes);
 
 // -------------------Deployment----------------------
-
-
 const __dirname1 = path.resolve()
 
 if(process.env.NODE_ENV === "production"){
@@ -34,13 +36,7 @@ if(process.env.NODE_ENV === "production"){
     res.send("API Is Running Successfully")
   })
 }
-
-
-
-
-
 // -------------------Deployment----------------------
-
 
 // Middleware for handling errors
 app.use(notFound);
@@ -54,9 +50,11 @@ const server = app.listen(PORT, () => {
 
 // Setting up socket.io
 const io = require("socket.io")(server, {
-  pingTimeout: 60000, // Wait 60 seconds after the last message to close the connection
+  pingTimeout: 60000,
   cors: {
-    origin: "https://text-mee.onrender.com", // Your frontend URL
+    origin: ["https://text-mee.onrender.com", "http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true
   },
 });
 
@@ -64,10 +62,10 @@ io.on("connection", (socket) => {
   console.log("Connected to socket.io");
 
   socket.on("setup", (userData) => {
-    socket.join(userData._id); // Join a room with the user ID
-    socket.userData = userData; // Store user data for later access
+    socket.join(userData._id);
+    socket.userData = userData;
     console.log("User setup with ID:", userData._id);
-    socket.emit("connected"); // Emit a connected event back to the client
+    socket.emit("connected");
   });
 
   socket.on("typing", (room) => socket.in(room).emit("typing"));
