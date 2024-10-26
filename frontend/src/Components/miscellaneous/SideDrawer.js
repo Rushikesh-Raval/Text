@@ -38,6 +38,8 @@ const SideDrawer = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState("");
   const [loadingChat, setLoadingChat] = useState("");
+  const front_url = "https://text-me-lpcd.onrender.com";
+
   const {
     user,
     setSelectedChat,
@@ -75,7 +77,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(`${front_url}/api/user?search=${search}`, config);
       setLoading(false);
       setSearchResult(data);
     } catch (error) {
@@ -100,7 +102,7 @@ const SideDrawer = () => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post("/api/chats", { userId }, config);
+      const { data } = await axios.post(`${front_url}/api/chats`, { userId }, config);
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
 
       setSelectedChat(data);

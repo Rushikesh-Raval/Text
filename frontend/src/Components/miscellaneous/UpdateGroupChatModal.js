@@ -31,6 +31,8 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain,fetchMessages }) => {
   const [loading, setLoading] = useState(false);
   const [searchResult, setSearchResult] = useState([]);
   const [search, setSearch] = useState("");
+  const ENDPOINT = "https://text-me-lpcd.onrender.com";
+
 
   const toast = useToast();
   const { selectedChat, setSelectedChat, user } = ChatState();
@@ -49,7 +51,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain,fetchMessages }) => {
         },
       };
       const { data } = await axios.put(
-        "/api/chats/rename",
+        `${front_url}/api/chats/rename`,
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -82,7 +84,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain,fetchMessages }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${query}`, config);
+      const { data } = await axios.get(`${front_url}/api/user?search=${query}`, config);
       setSearchResult(data);
       setLoading(false);
     } catch (error) {
@@ -129,7 +131,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain,fetchMessages }) => {
         },
       };
       const { data } = await axios.put(
-        "/api/chats/groupadd",
+        `${front_url}/api/chats/groupadd`,
         { chatId: selectedChat._id, userId: user1._id },
         config
       );
@@ -169,7 +171,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain,fetchMessages }) => {
         },
       };
       const { data } = await axios.put(
-        "/api/chats/groupremove",
+        `${front_url}/api/chats/groupremove`,
         {
           chatId: selectedChat._id,
           userId: user1._id,

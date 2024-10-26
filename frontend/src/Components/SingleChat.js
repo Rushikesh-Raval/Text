@@ -21,6 +21,7 @@ import Lottie from "react-lottie";
 import animationData from "../animation/typing.json";
 
 const ENDPOINT = "https://text-me-lpcd.onrender.com";
+
 let socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -30,6 +31,8 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const front_url = "https://text-me-lpcd.onrender.com";
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -54,7 +57,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       };
       setLoading(true);
       const { data } = await axios.get(
-        `/api/message/${selectedChat._id}`,
+        `${front_url}/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -96,7 +99,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     }
   }, [selectedChat]);
 
-  console.log(notification,".......Notification")
+  console.log(notification, ".......Notification");
 
   // Setup socket listener for receiving messages, run once
   useEffect(() => {
@@ -135,7 +138,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          "/api/message",
+          `${front_url}/api/message`,
           {
             content: newMessage,
             chatId: selectedChat._id,

@@ -27,6 +27,7 @@ const GroupChatModal = ({ children }) => {
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
+  const front_url = "https://text-me-lpcd.onrender.com";
 
   const toast = useToast();
 
@@ -44,7 +45,10 @@ const GroupChatModal = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`/api/user?search=${search}`, config);
+      const { data } = await axios.get(
+        `${front_url}/api/user?search=${search}`,
+        config
+      );
       console.log(data);
       setLoading(false);
       setSearchResult(data);
@@ -96,7 +100,7 @@ const GroupChatModal = ({ children }) => {
       };
 
       const { data } = await axios.post(
-        "/api/chats/group",
+        `${front_url}/api/chats/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),
