@@ -60,48 +60,33 @@ const io = require("socket.io")(server, {
   },
 });
 
-// Listen for socket connection
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
 
-  // Handle setup event from the client
   socket.on("setup", (userData) => {
     socket.join(userData._id); // Join a room with the user ID
+    socket.userData = userData; // Store user data for later access
     console.log("User setup with ID:", userData._id);
     socket.emit("connected"); // Emit a connected event back to the client
-  });
-
-  // Handle user joining a chat room
-  socket.on("join chat", (room) => {
-    socket.join(room);
-    console.log("User joined room:", room);
   });
 
   socket.on("typing", (room) => socket.in(room).emit("typing"));
   socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
-  // Handle receiving a new message
   socket.on("new message", (newMessageReceived) => {
     const chat = newMessageReceived.chat;
+    if (!chat.users) return console.log("chat.users not defined");
 
-    if (!chat.users) {
-      return console.log("chat.users not defined");
-    }
-
-    // Broadcast the message to other users in the chat, except the sender
     chat.users.forEach((user) => {
       if (user._id === newMessageReceived.sender._id) return;
-
       socket.in(user._id).emit("message received", newMessageReceived);
     });
   });
 
-  // socket.on("disconnect", () => {
-  //   console.log("User disconnected from socket.io");
-  // });
-
   socket.off("setup", () => {
     console.log("USER DISCONNECTED");
-    socket.leave(userData._id);
+    if (socket.userData) {
+      socket.leave(socket.userData._id);
+    }
   });
 });
