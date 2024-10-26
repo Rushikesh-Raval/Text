@@ -15,7 +15,7 @@ connectDB(); // Connect to the database
 
 // Middleware
 app.use(cors({
-  origin: ["https://text-mee.onrender.com", "http://localhost:3000"],
+  origin: ["https://text-mee.onrender.com"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
