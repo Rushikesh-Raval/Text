@@ -31,7 +31,7 @@ import ChatLoading from "../ChatLoading";
 import axios from "axios";
 import UserListItem from "../User Avatar/UserListItem";
 import { getSender } from "../../config/chatLogics";
-import NotificationBadge, { Effect } from 'react-notification-badge'
+// import NotificationBadge, { Effect } from 'react-notification-badge'
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -43,8 +43,8 @@ const SideDrawer = () => {
     setSelectedChat,
     chats,
     setChats,
-    notification,
-    setNotification,
+    // notification,
+    // setNotification,
   } = ChatState();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -145,14 +145,14 @@ const SideDrawer = () => {
         </Text>
         <div>
           <Menu>
-            <MenuButton p={1}>
+            {/* <MenuButton p={1}>
               <NotificationBadge 
                 count={notification.length}
                 effect={Effect.SCALE}
               />
               <BellIcon fontSize="2xl" m={1} />
-            </MenuButton>
-            <MenuList pl={2}>
+            </MenuButton> */}
+            {/* <MenuList pl={2}>
               {!notification.length && "No New Messages"}
               {notification.map((notif) => (
                 <MenuItem
@@ -167,7 +167,7 @@ const SideDrawer = () => {
                     : `New Message From ${getSender(user, notif.chat.users)}`}
                 </MenuItem>
               ))}
-            </MenuList>
+            </MenuList> */}
           </Menu>
           <Menu>
             <MenuButton
