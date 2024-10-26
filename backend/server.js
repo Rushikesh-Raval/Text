@@ -56,7 +56,7 @@ const server = app.listen(PORT, () => {
 const io = require("socket.io")(server, {
   pingTimeout: 60000, // Wait 60 seconds after the last message to close the connection
   cors: {
-    origin: "http://localhost:3000", // Your frontend URL
+    origin: "https://text-mee.onrender.com", // Your frontend URL
   },
 });
 
