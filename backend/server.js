@@ -65,8 +65,6 @@ if (process.env.NODE_ENV === "production") {
 }
 // -------------------Deployment----------------------
 
-// -------------------Deployment----------------------
-
 // Middleware for handling errors
 app.use(notFound);
 app.use(errorHandler);
